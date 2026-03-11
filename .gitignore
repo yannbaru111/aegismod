@@ -1,0 +1,18 @@
+# PyInstaller出力
+dist/
+build/
+*.spec
+
+# アイコン生成ファイル
+src/aegismod.ico
+
+# Python キャッシュ
+__pycache__/
+*.py[cod]
+
+# ユーザーデータ（パスワード・設定は含めない）
+.aegismod/
+
+# OS
+.DS_Store
+Thumbs.db

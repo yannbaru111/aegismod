@@ -319,12 +319,12 @@ class TwitchIRC:
                 i = t.find("="); tags[t[:i]] = t[i+1:]
             rest = line[sp+1:]
         if " 001 " in rest or " 376 " in rest:
-            self.app.set_status(True)
-            self.app._reconnect_count = 0
-            self.app.log(f"[OK] #{channel} に接続！自動モデレーション開始。", "ok"); return
+            self.app.after(0, lambda: self.app.set_status(True))
+            self.app.after(0, lambda: setattr(self.app, "_reconnect_count", 0))
+            self.app.after(0, lambda: self.app.log(f"[OK] #{channel} に接続！自動モデレーション開始。", "ok")); return
         if "Login authentication failed" in rest or "Improperly formatted" in rest:
-            self.app.log("[ERROR] 認証失敗: twitchtokengenerator.com でACCESS TOKENを再取得してください","error")
-            self.app.set_status(False); return
+            self.app.after(0, lambda: self.app.log("[ERROR] 認証失敗: twitchtokengenerator.com でACCESS TOKENを再取得してください","error"))
+            self.app.after(0, lambda: self.app.set_status(False)); return
         m = re.match(r"^:([^!]+)![^\s]+ PRIVMSG #([^\s]+) :(.+)$", rest)
         if not m: return
         uid, _, msg = m.group(1), m.group(2), m.group(3)
@@ -1251,6 +1251,7 @@ class App(tk.Tk):
     def _apply_penalty(self, uid, msg, kind, channel):
         """共通ペナルティ実行"""
         cfg = self._cfg
+        if not self.connected: return
         kind_jp = {"exact":"完全一致","similar":"類似","ng":"NGワード","speed":"速度違反","ai":"AI判定"}.get(kind, kind)
 
         # 段階的ペナルティOFF → 検知通知のみ・処置なし

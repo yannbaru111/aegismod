@@ -24,7 +24,7 @@ echo OK.
 echo.
 
 echo [2/5] Installing required packages...
-python -m pip install pyinstaller pystray pillow sentence-transformers openai
+python -m pip install pyinstaller pystray pillow sentence-transformers
 if %errorlevel% neq 0 (
     echo.
     echo [ERROR] Failed to install packages.
@@ -46,7 +46,7 @@ if %errorlevel% neq 0 (
 echo.
 
 echo [4/5] Building exe... (this takes 1-2 minutes)
-python -m PyInstaller --onefile --windowed --name "AegisMod" %ICON_OPT% --add-data "src\ai_engine.py;." src\main.py
+python -m PyInstaller --onedir --windowed --noupx --name "AegisMod" %ICON_OPT% --add-data "src\ai_engine.py;." src\main.py
 if %errorlevel% neq 0 (
     echo.
     echo [ERROR] Build failed.
@@ -57,8 +57,8 @@ echo OK.
 echo.
 
 echo ================================================
-echo   SUCCESS! dist\AegisMod.exe is ready!
-echo   Double-click it to launch the app.
+echo   SUCCESS! dist\AegisMod\AegisMod.exe is ready!
+echo   dist\AegisMod フォルダごと使ってください。
 echo ================================================
 echo.
 start explorer dist

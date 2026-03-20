@@ -58,7 +58,7 @@ echo.
 
 echo ================================================
 echo   SUCCESS! dist\AegisMod\AegisMod.exe is ready!
-echo   dist\AegisMod フォルダごと使ってください。
+echo   Use the dist\AegisMod folder to run the app.
 echo ================================================
 echo.
 start explorer dist
